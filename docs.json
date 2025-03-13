@@ -1,6 +1,6 @@
 {
 	"$schema": "https://mintlify.com/docs.json",
-	"theme": "maple",
+	"theme": "linden",
 	"name": "Fillonit's Scraper API",
 	"colors": {
 		"primary": "#4F46E5",
@@ -47,7 +47,7 @@
 						"group": "KosovaJobs",
 						"pages": [
 							"api-reference/kosovajobs/introduction",
-							"api-reference/kosovajobs/get-cities",
+							"api-reference/kosovajobs/get-ci ties",
 							"api-reference/kosovajobs/get-industries"
 						]
 					},
