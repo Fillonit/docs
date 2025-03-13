@@ -81,7 +81,7 @@
 			"anchors": [
 				{
 					"anchor": "API Reference",
-					"href": "/api-reference/introduction",
+					"href": "https://fillonit.mintlify.app/api-reference/introduction",
 					"icon": "spider"
 				},
 				{
