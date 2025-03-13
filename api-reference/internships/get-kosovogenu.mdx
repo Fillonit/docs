@@ -46,7 +46,7 @@ Retrieve a list of available internships from Kosovogenu. Our web scraper automa
 
 <RequestExample>
 	<CodeGroup>
-		```bash curl -X GET
+		```bash curl -X GET curl -X GET
 		https://scrape.fillonit.tech/api/get_internships/kosovogenu ```
 	</CodeGroup>
 </RequestExample>
@@ -58,20 +58,22 @@ Retrieve a list of available internships from Kosovogenu. Our web scraper automa
   "status": 200,
   "data": [
     {
-      "title": "Software Development Intern",
-      "company": "Tech Solutions Kosovo",
+      "title": "Software Engineering Intern",
+      "company": "Tech Solutions KS",
       "location": "Prishtina, Kosovo",
-      "link": "https://kosovogenu.com/internships/software-dev-intern",
-      "posted_date": "2024-01-15",
-      "duration": "3 months"
+      "link": "https://kosovogenu.com/internships/software-eng-intern",
+      "posted_date": "2024-01-17",
+      "duration": "6 months",
+      "skills_required": ["Python", "Django", "PostgreSQL", "REST APIs"]
     },
     {
-      "title": "Digital Marketing Intern",
-      "company": "Creative Agency XYZ",
-      "location": "Prizren, Kosovo",
-      "link": "https://kosovogenu.com/internships/marketing-intern",
-      "posted_date": "2024-01-14",
-      "duration": "6 months"
+      "title": "Data Analysis Intern",
+      "company": "Data Insights KS",
+      "location": "Prishtina, Kosovo",
+      "link": "https://kosovogenu.com/internships/data-analysis-intern",
+      "posted_date": "2024-01-16",
+      "duration": "5 months",
+      "skills_required": ["SQL", "Excel", "Tableau", "Data Visualization"]
     }
   ]
 }
