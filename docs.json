@@ -1,102 +1,123 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mint Starter Kit",
-  "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
-  },
-  "favicon": "/favicon.svg",
-  "navigation": {
-    "tabs": [
-      {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Get Started",
-            "pages": [
-              "introduction",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Essentials",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/settings",
-              "essentials/navigation",
-              "essentials/reusable-snippets"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API Reference",
-        "groups": [
-          {
-            "group": "API Documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint Examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
-  },
-  "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
-    }
-  }
+	"$schema": "https://mintlify.com/docs.json",
+	"theme": "mint",
+	"name": "Fillonit's Scraper API",
+	"colors": {
+		"primary": "#4F46E5",
+		"light": "#60A5FA",
+		"dark": "#1E40AF"
+	},
+	"favicon": "/favicon.svg",
+	"navigation": {
+		"tabs": [
+			{
+				"tab": "Documentation",
+				"groups": [
+					{
+						"group": "Overview",
+						"pages": ["introduction", "quickstart", "development"]
+					}
+				]
+			},
+			{
+				"tab": "API Reference",
+				"groups": [
+					{
+						"group": "API Documentation",
+						"pages": ["api-reference/introduction"]
+					},
+					{
+						"group": "KosovaJobs",
+						"pages": [
+							"api-reference/kosovajobs/introduction",
+							"api-reference/kosovajobs/get-cities",
+							"api-reference/kosovajobs/get-industries"
+						]
+					},
+					{
+						"group": "E-commerce",
+						"pages": ["api-reference/ecommerce/introduction"]
+					},
+					{
+						"group": "Foleja",
+						"pages": [
+							"api-reference/ecommerce/foleja/get-product",
+							"api-reference/ecommerce/foleja/get-products"
+						]
+					},
+					{
+						"group": "Gjirafa50",
+						"pages": [
+							"api-reference/ecommerce/gjirafa50/get-product",
+							"api-reference/ecommerce/gjirafa50/get-products"
+						]
+					},
+					{
+						"group": "Internships",
+						"pages": [
+							"api-reference/internships/introduction",
+							"api-reference/internships/get-kosovogenu",
+							"api-reference/internships/get-superpuna"
+						]
+					},
+					{
+						"group": "Jobs",
+						"pages": [
+							"api-reference/jobs/introduction",
+							"api-reference/jobs/get-fresha-job"
+						]
+					},
+					{
+						"group": "Horoscope",
+						"pages": [
+							"api-reference/horoscope/introduction",
+							"api-reference/horoscope/get-horoscope"
+						]
+					}
+				]
+			}
+		],
+		"global": {
+			"anchors": [
+				{
+					"anchor": "API Reference",
+					"href": "/api-reference/introduction",
+					"icon": "spider"
+				},
+				{
+					"anchor": "GitHub",
+					"href": "https://github.com/Fillonit/job-scraper",
+					"icon": "github"
+				},
+				{
+					"anchor": "Contact",
+					"href": "mailto:contact@fillonit.tech",
+					"icon": "envelope"
+				}
+			]
+		}
+	},
+	"logo": {
+		"light": "/logo/light.svg",
+		"dark": "/logo/dark.svg"
+	},
+	"navbar": {
+		"links": [
+			{
+				"label": "Support",
+				"href": "mailto:contact@fillonit.tech"
+			}
+		],
+		"primary": {
+			"type": "button",
+			"label": "GitHub",
+			"href": "https://github.com/Fillonit/job-scraper"
+		}
+	},
+	"footer": {
+		"socials": {
+			"github": "https://github.com/Fillonit",
+			"linkedin": "https://linkedin.com/in/fillonit"
+		}
+	}
 }

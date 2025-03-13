@@ -1,33 +1,77 @@
 ---
-title: 'Introduction'
-description: 'Example section for showcasing API endpoints'
+title: 'Scraper API Introduction'
+description: 'API for scraping useful information from various sources'
 ---
 
-<Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
-</Note>
+## Welcome to Fillonit's Scraper API
 
-## Welcome
-
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+The Scraper API provides a collection of endpoints for retrieving data from various sources including job listings, product information, horoscopes, and more. This API is designed to make it easy to access structured data from websites that don't provide official APIs.
 
 <Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
+  title="Scraper API Specification"
+  icon="code"
+  href="/api-reference/openapi.json"
 >
-  View the OpenAPI specification file
+  View the complete OpenAPI specification
 </Card>
 
-## Authentication
+## API Categories
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+The API is organized into the following categories:
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+<CardGroup cols={2}>
+  <Card
+    title="KosovaJobs"
+    icon="briefcase"
+    href="/api-reference/kosovajobs/introduction"
+  >
+    Endpoints for retrieving job listings and related data from KosovaJobs
+  </Card>
+  <Card
+    title="E-commerce"
+    icon="shopping-cart"
+    href="/api-reference/ecommerce/introduction"
+  >
+    Endpoints for retrieving product information from Foleja and Gjirafa50
+  </Card>
+  <Card
+    title="Internships"
+    icon="graduation-cap"
+    href="/api-reference/internships/introduction"
+  >
+    Endpoints for retrieving internship listings from various sources
+  </Card>
+  <Card
+    title="Horoscope"
+    icon="star"
+    href="/api-reference/horoscope/introduction"
+  >
+    Endpoints for retrieving horoscope information
+  </Card>
+</CardGroup>
+
+## Base URLs
+
+The API is available at the following base URLs:
+
 ```
+http://localhost:8000            # Local development
+https://job-scraper.shuttleapp.rs # Production server
+https://scrape.fillonit.tech     # Production server #2
+```
+
+## Response Format
+
+All API responses are returned in JSON format. Successful responses will have a 2xx status code, while errors will have a 4xx or 5xx status code.
+
+## Error Handling
+
+The API uses standard HTTP status codes to indicate the success or failure of a request:
+
+- `200 OK`: The request was successful
+- `400 Bad Request`: The request was invalid
+- `500 Internal Server Error`: An error occurred on the server
+
+## Rate Limiting
+
+There are currently no rate limits in place, but please be considerate with your API usage to ensure availability for all users.

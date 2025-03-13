@@ -1,0 +1,62 @@
+---
+title: "Internships API"
+description: "Automated scraping endpoints for retrieving internship listings from various sources"
+icon: "spider-web"
+---
+
+## Overview
+
+The Internships API provides automated scraping endpoints for retrieving internship listings from various sources in Kosovo. Our intelligent web crawlers continuously monitor and extract data from platforms like Kosovogenu and Superpuna, ensuring you have access to the latest internship opportunities.
+
+## Available Endpoints
+
+<CardGroup cols={2}>
+	<Card
+		title="Get Kosovogenu Internships"
+		icon="spider"
+		href="/api-reference/internships/kosovogenu"
+	>
+		Automated scraping of internships from Kosovogenu's platform
+	</Card>
+	<Card
+		title="Get Superpuna Internships"
+		icon="robot"
+		href="/api-reference/internships/superpuna"
+	>
+		Intelligent extraction of internships from Superpuna's platform
+	</Card>
+</CardGroup>
+
+## Response Format
+
+All Internships API endpoints return data in a standardized JSON format. Our scrapers process and normalize the data to ensure consistency across different sources.
+
+### Success Response
+
+Successful responses will have a 200 status code and return an array of internship listings.
+
+### Error Response
+
+If our scrapers encounter any issues while processing your request, the API will return a 500 status code with a descriptive error message.
+
+## Example Usage
+
+```javascript
+// Example: Fetching internships from Kosovogenu
+async function getKosovogenuInternships() {
+	const response = await fetch(
+		"https://scrape.fillonit.tech/api/get_internships/kosovogenu"
+	);
+	const data = await response.json();
+	console.log(data);
+}
+
+// Example: Fetching internships from Superpuna
+async function getSuperpunaInternships() {
+	const response = await fetch(
+		"https://scrape.fillonit.tech/api/get_internships/superpuna"
+	);
+	const data = await response.json();
+	console.log(data);
+}
+```

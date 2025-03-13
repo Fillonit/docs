@@ -1,0 +1,49 @@
+---
+title: "Jobs API"
+description: "Automated scraping endpoints for retrieving job listings from various sources"
+icon: "briefcase"
+---
+
+## Overview
+
+The Jobs API provides automated scraping endpoints for retrieving job listings from various job boards in Kosovo and beyond. Our intelligent web crawlers continuously monitor and extract data from platforms like Fresha, ensuring you have access to the latest job opportunities.
+
+## Available Endpoints
+
+<CardGroup cols={2}>
+	<Card
+		title="Get Fresha Job Details"
+		icon="building"
+		href="/api-reference/jobs/get-fresha-job"
+	>
+		Retrieve detailed information about specific jobs from Fresha
+	</Card>
+</CardGroup>
+
+## Response Format
+
+All Jobs API endpoints return data in a standardized JSON format. Our scrapers process and normalize the data to ensure consistency across different sources.
+
+### Success Response
+
+Successful responses will have a 200 status code and return job details in a structured format.
+
+### Error Response
+
+If our scrapers encounter any issues while processing your request, the API will return a 500 status code with a descriptive error message.
+
+## Example Usage
+
+```javascript
+// Example: Fetching job details from Fresha
+async function getFreshaJob() {
+	const jobUrl = "https://fresha.com/jobs/example-job";
+	const response = await fetch(
+		`https://scrape.fillonit.tech/api/get_job/fresha?url=${encodeURIComponent(
+			jobUrl
+		)}`
+	);
+	const data = await response.json();
+	console.log(data);
+}
+```

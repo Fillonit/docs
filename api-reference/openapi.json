@@ -1,217 +1,961 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
-    },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
-  "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "webhooks": {
-    "/plant/webhook": {
-      "post": {
-        "description": "Information about a new plant added to the store",
-        "requestBody": {
-          "description": "Plant added to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    }
-  }
+	"openapi": "3.0.3",
+	"info": {
+		"title": "Fillonit's Scraper API",
+		"description": "API for scraping useful information.",
+		"contact": {
+			"name": "Fillonit Ibishi",
+			"url": "https://fillonit.tech",
+			"email": "contact@fillonit.tech"
+		},
+		"license": {
+			"name": "MIT",
+			"url": "https://github.com/Fillonit/job-scraper/blob/main/LICENSE"
+		},
+		"version": "0.3.8"
+	},
+	"servers": [
+		{ "url": "http://localhost:8000", "description": "Local server" },
+		{
+			"url": "https://job-scraper.shuttleapp.rs",
+			"description": "Production server"
+		},
+		{
+			"url": "https://scrape.fillonit.tech",
+			"description": "Production server #2",
+			"variables": {
+				"version": { "default": "v1", "enum": ["v1", "v2"] }
+			}
+		}
+	],
+	"paths": {
+		"/api/get_cities/kosovajobs": {
+			"get": {
+				"tags": ["KosovaJobs"],
+				"description": "Retrieve a list of cities from KosovaJobs",
+				"operationId": "get_cities_kosovajobs_handler",
+				"responses": {
+					"200": { "description": "List of cities from KosovaJobs" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_foleja_product": {
+			"get": {
+				"tags": ["Foleja"],
+				"description": "Retrieve product details from Foleja.",
+				"operationId": "get_foleja_product_handler",
+				"parameters": [
+					{
+						"name": "url",
+						"in": "query",
+						"description": "The URL of the job posting",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product details",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"required": [
+										"title",
+										"current_price",
+										"image_url",
+										"link",
+										"product_id"
+									],
+									"properties": {
+										"current_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"image_url": {
+											"type": "string",
+											"example": "https://example.com/image.jpg"
+										},
+										"link": {
+											"type": "string",
+											"example": "https://example.com/product"
+										},
+										"previous_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"product_id": {
+											"type": "string",
+											"example": "product_id"
+										},
+										"sale_percentage": {
+											"type": "string",
+											"example": "-41%"
+										},
+										"title": {
+											"type": "string",
+											"example": "Fenix Bundle 1"
+										}
+									}
+								}
+							}
+						}
+					},
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_foleja_products": {
+			"get": {
+				"tags": ["Foleja"],
+				"description": "Retrieve a list of Foleja products with pricing details.",
+				"operationId": "get_foleja_products_handler",
+				"responses": {
+					"200": {
+						"description": "List of Featured Foleja products",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"required": [
+										"title",
+										"current_price",
+										"image_url",
+										"link",
+										"product_id"
+									],
+									"properties": {
+										"current_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"image_url": {
+											"type": "string",
+											"example": "https://example.com/image.jpg"
+										},
+										"link": {
+											"type": "string",
+											"example": "https://example.com/product"
+										},
+										"previous_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"product_id": {
+											"type": "string",
+											"example": "product_id"
+										},
+										"sale_percentage": {
+											"type": "string",
+											"example": "-41%"
+										},
+										"title": {
+											"type": "string",
+											"example": "Fenix Bundle 1"
+										}
+									}
+								}
+							}
+						}
+					},
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_gjirafa50_product": {
+			"get": {
+				"tags": ["Gjirafa50"],
+				"description": "Retrieve product details from gjirafa50.",
+				"operationId": "get_gjirafa50_product_handler",
+				"parameters": [
+					{
+						"name": "url",
+						"in": "query",
+						"description": "The URL of the job posting",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Product details",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"required": [
+										"title",
+										"current_price",
+										"image_url",
+										"link",
+										"product_id"
+									],
+									"properties": {
+										"current_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"image_url": {
+											"type": "string",
+											"example": "https://example.com/image.jpg"
+										},
+										"link": {
+											"type": "string",
+											"example": "https://example.com/product"
+										},
+										"previous_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"product_id": {
+											"type": "string",
+											"example": "product_id"
+										},
+										"sale_percentage": {
+											"type": "string",
+											"example": "-41%"
+										},
+										"title": {
+											"type": "string",
+											"example": "Fenix Bundle 1"
+										}
+									}
+								}
+							}
+						}
+					},
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_gjirafa50_products": {
+			"get": {
+				"tags": ["Gjirafa50"],
+				"description": "Retrieve a list of Gjirafa50 products with pricing details.",
+				"operationId": "get_products_handler",
+				"responses": {
+					"200": {
+						"description": "List of Featured Gjirafa50 products",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"required": [
+										"title",
+										"current_price",
+										"image_url",
+										"link",
+										"product_id"
+									],
+									"properties": {
+										"current_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"image_url": {
+											"type": "string",
+											"example": "https://example.com/image.jpg"
+										},
+										"link": {
+											"type": "string",
+											"example": "https://example.com/product"
+										},
+										"previous_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"product_id": {
+											"type": "string",
+											"example": "product_id"
+										},
+										"sale_percentage": {
+											"type": "string",
+											"example": "-41%"
+										},
+										"title": {
+											"type": "string",
+											"example": "Fenix Bundle 1"
+										}
+									}
+								}
+							}
+						}
+					},
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_horoscope": {
+			"get": {
+				"tags": ["Horoscope"],
+				"description": "Retrieve the horoscope for a given zodiac sign",
+				"operationId": "get_sign_horoscope",
+				"parameters": [
+					{
+						"name": "sign",
+						"in": "query",
+						"description": "Zodiac sign",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Horoscope retrieved successfully"
+					},
+					"400": {
+						"description": "Invalid or missing sign parameter"
+					},
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_industries/kosovajobs": {
+			"get": {
+				"tags": ["KosovaJobs"],
+				"description": "Retrieve a list of industries from KosovaJobs",
+				"operationId": "get_industries_kosovajobs_handler",
+				"responses": {
+					"200": {
+						"description": "List of industries from KosovaJobs"
+					},
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_internships/kosovogenu": {
+			"get": {
+				"tags": ["Internships"],
+				"description": "Retrieve a list of jobs from Kosovogenu",
+				"operationId": "get_internships_kosovogenu_handler",
+				"responses": {
+					"200": { "description": "List of jobs from Kosovogenu" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_internships/superpuna": {
+			"get": {
+				"tags": ["Internships"],
+				"description": "Retrieve a list of jobs from Superpuna",
+				"operationId": "get_internships_superpuna_handler",
+				"responses": {
+					"200": { "description": "List of jobs from Superpuna" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_job/fresha": {
+			"get": {
+				"tags": ["Fresha"],
+				"description": "Retrieve job details from Fresha using job URL",
+				"operationId": "get_job_fresha_handler",
+				"parameters": [
+					{
+						"name": "url",
+						"in": "query",
+						"description": "The URL of the job posting",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Job details from Fresha" },
+					"400": { "description": "Missing URL parameter" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_job/inspire11": {
+			"get": {
+				"tags": ["Inspire11"],
+				"description": "Retrieve job details from Inspire11 using job URL",
+				"operationId": "get_job_inspire11_handler",
+				"parameters": [
+					{
+						"name": "url",
+						"in": "query",
+						"description": "The URL of the job posting",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Job details from Inspire11" },
+					"400": { "description": "Missing URL parameter" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_job/kosovajobs": {
+			"get": {
+				"tags": ["KosovaJobs"],
+				"description": "Retrieve job details from KosovaJobs using job URL",
+				"operationId": "get_single_job_kosovajobs_handler",
+				"parameters": [
+					{
+						"name": "url",
+						"in": "query",
+						"description": "The URL of the job posting",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Job details from KosovaJobs" },
+					"400": { "description": "Missing URL parameter" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_job/portalpune": {
+			"get": {
+				"tags": ["PortalPune"],
+				"description": "Retrieve job details from PortalPune using job URL",
+				"operationId": "get_job_portalpune_handler",
+				"parameters": [
+					{
+						"name": "url",
+						"in": "query",
+						"description": "The URL of the job posting",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Job details from PortalPune" },
+					"400": { "description": "Missing URL parameter" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_job/sonnecto": {
+			"get": {
+				"tags": ["Sonnecto"],
+				"description": "Retrieve job details from Sonnecto using job URL",
+				"operationId": "get_job_sonnecto_handler",
+				"parameters": [
+					{
+						"name": "url",
+						"in": "query",
+						"description": "The URL of the job posting",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Job details from Sonnecto" },
+					"400": { "description": "Missing URL parameter" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_job/tive": {
+			"get": {
+				"tags": ["Tive"],
+				"description": "Retrieve job details from Tive using job URL",
+				"operationId": "get_job_tive_handler",
+				"parameters": [
+					{
+						"name": "url",
+						"in": "query",
+						"description": "The URL of the job posting",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Job details from Tive" },
+					"400": { "description": "Missing URL parameter" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_jobs/fresha": {
+			"get": {
+				"tags": ["Fresha"],
+				"description": "Retrieve a list of jobs from Fresha",
+				"operationId": "get_jobs_fresha_handler",
+				"responses": {
+					"200": { "description": "List of jobs from Fresha" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_jobs/inspire11": {
+			"get": {
+				"tags": ["Inspire11"],
+				"description": "Retrieve a list of jobs from Inspire11",
+				"operationId": "get_jobs_inspire11_handler",
+				"responses": {
+					"200": { "description": "List of jobs from Inspire11" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_jobs/kosovajobs": {
+			"get": {
+				"tags": ["KosovaJobs"],
+				"description": "Retrieve a list of jobs from KosovaJobs",
+				"operationId": "get_jobs_kosovajobs_handler",
+				"responses": {
+					"200": { "description": "List of jobs from KosovaJobs" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_jobs/portalpune": {
+			"get": {
+				"tags": ["PortalPune"],
+				"description": "Retrieve a list of jobs from PortalPune",
+				"operationId": "get_jobs_portalpune_handler",
+				"responses": {
+					"200": { "description": "List of jobs from PortalPune" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_jobs/sonnecto": {
+			"get": {
+				"tags": ["Sonnecto"],
+				"description": "Retrieve a list of jobs from Sonnecto",
+				"operationId": "get_jobs_sonnecto_handler",
+				"responses": {
+					"200": { "description": "List of jobs from Sonnecto" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_jobs/tive": {
+			"get": {
+				"tags": ["Tive"],
+				"description": "Retrieve a list of jobs from Tive",
+				"operationId": "get_jobs_tive_handler",
+				"responses": {
+					"200": { "description": "List of jobs from Tive" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/get_products_gamestar": {
+			"get": {
+				"tags": ["GameStar"],
+				"description": "Products retrieved successfully",
+				"operationId": "get_products_gamestar",
+				"responses": {
+					"200": {
+						"description": "Products retrieved successfully",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"required": [
+										"id",
+										"name",
+										"permalink",
+										"images",
+										"price",
+										"regular_price",
+										"sale_price",
+										"stock_status"
+									],
+									"properties": {
+										"id": {
+											"type": "integer",
+											"format": "int32",
+											"example": "13"
+										},
+										"images": {
+											"type": "array",
+											"items": {
+												"$ref": "#/components/schemas/Image"
+											},
+											"example": "https://example.com/image.jpg"
+										},
+										"name": {
+											"type": "string",
+											"example": "Cyberpunk 2077"
+										},
+										"permalink": {
+											"type": "string",
+											"example": "https://example.com/product"
+										},
+										"price": {
+											"$ref": "#/components/schemas/Prices"
+										},
+										"regular_price": {
+											"type": "string",
+											"example": "1,199.50 €"
+										},
+										"sale_price": {
+											"type": "string",
+											"example": "949.50 €"
+										},
+										"stock_status": {
+											"type": "string",
+											"example": "20"
+										}
+									}
+								}
+							}
+						}
+					},
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/search_foleja_products": {
+			"get": {
+				"tags": ["Foleja"],
+				"description": "Search Foleja store.",
+				"operationId": "search_foleja_products_handler",
+				"parameters": [
+					{
+						"name": "search",
+						"in": "query",
+						"description": "The search query",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Search Foleja store.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"required": [
+										"title",
+										"current_price",
+										"image_url",
+										"link",
+										"product_id"
+									],
+									"properties": {
+										"current_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"image_url": {
+											"type": "string",
+											"example": "https://example.com/image.jpg"
+										},
+										"link": {
+											"type": "string",
+											"example": "https://example.com/product"
+										},
+										"previous_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"product_id": {
+											"type": "string",
+											"example": "product_id"
+										},
+										"sale_percentage": {
+											"type": "string",
+											"example": "-41%"
+										},
+										"title": {
+											"type": "string",
+											"example": "Fenix Bundle 1"
+										}
+									}
+								}
+							}
+						}
+					},
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/search_gjirafa50_products": {
+			"get": {
+				"tags": ["Gjirafa50"],
+				"description": "Search Gjirafa50 store.",
+				"operationId": "search_gjirafa50_products_handler",
+				"parameters": [
+					{
+						"name": "search",
+						"in": "query",
+						"description": "The search query",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Search Gjirafa50 store.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"required": [
+										"title",
+										"current_price",
+										"image_url",
+										"link",
+										"product_id"
+									],
+									"properties": {
+										"current_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"image_url": {
+											"type": "string",
+											"example": "https://example.com/image.jpg"
+										},
+										"link": {
+											"type": "string",
+											"example": "https://example.com/product"
+										},
+										"previous_price": {
+											"$ref": "#/components/schemas/Price"
+										},
+										"product_id": {
+											"type": "string",
+											"example": "product_id"
+										},
+										"sale_percentage": {
+											"type": "string",
+											"example": "-41%"
+										},
+										"title": {
+											"type": "string",
+											"example": "Fenix Bundle 1"
+										}
+									}
+								}
+							}
+						}
+					},
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/search_jobs/kosovajobs": {
+			"get": {
+				"tags": ["KosovaJobs"],
+				"description": "Search for jobs in KosovaJobs using a query string",
+				"operationId": "search_jobs_kosovajobs_handler",
+				"parameters": [
+					{
+						"name": "query",
+						"in": "query",
+						"description": "The search query for jobs",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "jobIndustry",
+						"in": "query",
+						"description": "The industry filter for jobs",
+						"required": true,
+						"schema": { "type": "string" }
+					},
+					{
+						"name": "jobCity",
+						"in": "query",
+						"description": "The city filter for jobs",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Search results from KosovaJobs" },
+					"400": { "description": "Missing query parameter" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		},
+		"/api/search_jobs/portalpune": {
+			"get": {
+				"tags": ["PortalPune"],
+				"description": "Search for jobs in PortalPune using a query string",
+				"operationId": "search_jobs_portalpune_handler",
+				"parameters": [
+					{
+						"name": "query",
+						"in": "query",
+						"description": "The search query for jobs",
+						"required": true,
+						"schema": { "type": "string" }
+					}
+				],
+				"responses": {
+					"200": { "description": "Search results from PortalPune" },
+					"400": { "description": "Missing query parameter" },
+					"500": { "description": "Internal Server Error" }
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"City": {
+				"type": "object",
+				"required": ["name", "value"],
+				"properties": {
+					"name": { "type": "string", "example": "Prishtina" },
+					"value": { "type": "string", "example": "1" }
+				}
+			},
+			"Company": {
+				"type": "object",
+				"required": ["logo", "name"],
+				"properties": {
+					"logo": {
+						"type": "string",
+						"example": "https://example.com/logo.png"
+					},
+					"name": { "type": "string", "example": "Example Company" }
+				}
+			},
+			"Expiry": {
+				"type": "object",
+				"required": ["number", "text"],
+				"properties": {
+					"number": {
+						"type": "integer",
+						"format": "int32",
+						"example": 30
+					},
+					"text": { "type": "string", "example": "30 days" }
+				}
+			},
+			"Horoscope": {
+				"type": "object",
+				"required": ["horoscope"],
+				"properties": {
+					"horoscope": {
+						"type": "string",
+						"example": "Today is a good day."
+					}
+				}
+			},
+			"Industry": {
+				"type": "object",
+				"required": ["name", "value"],
+				"properties": {
+					"name": {
+						"type": "string",
+						"example": "Software Development"
+					},
+					"value": { "type": "string", "example": "1" }
+				}
+			},
+			"JobDescription": {
+				"type": "object",
+				"required": ["html", "text"],
+				"properties": {
+					"html": {
+						"type": "string",
+						"example": "<p>Job description in HTML format</p>"
+					},
+					"text": {
+						"type": "string",
+						"example": "Job description in text format"
+					}
+				}
+			},
+			"KosovaJob": {
+				"type": "object",
+				"required": [
+					"company",
+					"expiry",
+					"location",
+					"title",
+					"orari",
+					"description"
+				],
+				"properties": {
+					"company": { "$ref": "#/components/schemas/Company" },
+					"description": {
+						"type": "string",
+						"example": "Develop and maintain software applications."
+					},
+					"expiry": { "$ref": "#/components/schemas/Expiry" },
+					"link": {
+						"type": "string",
+						"example": "https://example.com/job"
+					},
+					"location": {
+						"type": "array",
+						"items": { "type": "string" },
+						"example": "Remote"
+					},
+					"orari": { "type": "string", "example": "Full-time" },
+					"title": {
+						"type": "string",
+						"example": "Software Engineer"
+					}
+				}
+			},
+			"PortalPuneJob": {
+				"type": "object",
+				"required": [
+					"company",
+					"description",
+					"expiry",
+					"location",
+					"title",
+					"link"
+				],
+				"properties": {
+					"company": { "$ref": "#/components/schemas/Company" },
+					"description": {
+						"$ref": "#/components/schemas/JobDescription"
+					},
+					"email": {
+						"type": "string",
+						"example": "example@example.com"
+					},
+					"expiry": { "$ref": "#/components/schemas/Expiry" },
+					"link": {
+						"type": "string",
+						"example": "https://example.com/job"
+					},
+					"location": {
+						"type": "array",
+						"items": { "type": "string" },
+						"example": "Remote"
+					},
+					"orari": { "type": "string", "example": "Full-time" },
+					"title": {
+						"type": "string",
+						"example": "Software Engineer"
+					}
+				}
+			},
+			"Price": {
+				"type": "object",
+				"required": ["text", "number"],
+				"properties": {
+					"number": {
+						"type": "number",
+						"format": "float",
+						"example": 949.5
+					},
+					"text": { "type": "string", "example": "949.50 €" }
+				}
+			},
+			"Product": {
+				"type": "object",
+				"required": [
+					"title",
+					"current_price",
+					"image_url",
+					"link",
+					"product_id"
+				],
+				"properties": {
+					"current_price": { "$ref": "#/components/schemas/Price" },
+					"image_url": {
+						"type": "string",
+						"example": "https://example.com/image.jpg"
+					},
+					"link": {
+						"type": "string",
+						"example": "https://example.com/product"
+					},
+					"previous_price": { "$ref": "#/components/schemas/Price" },
+					"product_id": { "type": "string", "example": "product_id" },
+					"sale_percentage": { "type": "string", "example": "-41%" },
+					"title": { "type": "string", "example": "Fenix Bundle 1" }
+				}
+			}
+		}
+	}
 }

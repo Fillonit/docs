@@ -1,0 +1,80 @@
+---
+title: 'E-commerce API'
+description: 'Endpoints for retrieving product information from e-commerce websites'
+icon: 'shopping-cart'
+---
+
+## Overview
+
+The E-commerce API provides endpoints for retrieving product information from popular e-commerce websites in Kosovo, including Foleja and Gjirafa50. These endpoints allow you to access detailed product information, pricing, and availability.
+
+## Available Endpoints
+
+### Foleja
+
+<CardGroup cols={2}>
+  <Card title="Get Foleja Product" icon="tag" href="/api-reference/ecommerce/foleja/get-product">
+    Retrieve details for a specific product from Foleja
+  </Card>
+  <Card title="Get Foleja Products" icon="tags" href="/api-reference/ecommerce/foleja/get-products">
+    Retrieve a list of featured products from Foleja
+  </Card>
+</CardGroup>
+
+### Gjirafa50
+
+<CardGroup cols={2}>
+  <Card title="Get Gjirafa50 Product" icon="tag" href="/api-reference/ecommerce/gjirafa50/get-product">
+    Retrieve details for a specific product from Gjirafa50
+  </Card>
+  <Card title="Get Gjirafa50 Products" icon="tags" href="/api-reference/ecommerce/gjirafa50/get-products">
+    Retrieve a list of featured products from Gjirafa50
+  </Card>
+</CardGroup>
+
+## Response Format
+
+All E-commerce API endpoints return data in JSON format. The response includes product details such as title, current price, previous price (if available), sale percentage (if on sale), product ID, image URL, and link to the product page.
+
+### Example Response
+
+```json
+{
+  "title": "Fenix Bundle 1",
+  "current_price": {
+    "amount": "59.99",
+    "currency": "€"
+  },
+  "previous_price": {
+    "amount": "99.99",
+    "currency": "€"
+  },
+  "sale_percentage": "-41%",
+  "product_id": "product_123",
+  "image_url": "https://example.com/image.jpg",
+  "link": "https://example.com/product"
+}
+```
+
+## Error Handling
+
+If an error occurs while processing your request, the API will return a 500 status code with an error message in the response body.
+
+## Example Usage
+
+```javascript
+// Example: Fetching a specific product from Foleja
+async function getFolejaProduct() {
+  const productUrl = 'https://foleja.com/product/123';
+  const response = await fetch(`https://scrape.fillonit.tech/api/get_foleja_product?url=${encodeURIComponent(productUrl)}`);
+  const data = await response.json();
+  console.log(data);
+}
+
+// Example: Fetching featured products from Gjirafa50
+async function getGjirafa50Products() {
+  const response = await fetch('https://scrape.fillonit.tech/api/get_gjirafa50_products');
+  const data = await response.json();
+  console.log(data);
+}
+```

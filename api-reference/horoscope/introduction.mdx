@@ -1,0 +1,52 @@
+---
+title: 'Horoscope API'
+description: 'Endpoints for retrieving horoscope information'
+icon: 'star'
+---
+
+## Overview
+
+The Horoscope API provides endpoints for retrieving horoscope information for different zodiac signs. This API allows you to access daily horoscope predictions and related information.
+
+## Available Endpoints
+
+<Card title="Get Horoscope" icon="star" href="/api-reference/horoscope/get-horoscope">
+  Retrieve the horoscope for a given zodiac sign
+</Card>
+
+## Request Parameters
+
+| Parameter | Type | Required | Description |
+| --------- | ---- | -------- | ----------- |
+| sign | string | Yes | The zodiac sign to retrieve the horoscope for |
+
+## Response Format
+
+The Horoscope API endpoint returns data in JSON format. Successful responses will have a 200 status code, while errors will have a 400 or 500 status code.
+
+## Error Handling
+
+The API uses the following status codes to indicate the success or failure of a request:
+
+- `200 OK`: The request was successful
+- `400 Bad Request`: The request was invalid (e.g., missing or invalid sign parameter)
+- `500 Internal Server Error`: An error occurred on the server
+
+## Example Usage
+
+```javascript
+// Example: Fetching horoscope for a specific zodiac sign
+async function getHoroscope(sign) {
+  const response = await fetch(`https://scrape.fillonit.tech/api/get_horoscope?sign=${sign}`);
+  
+  if (!response.ok) {
+    throw new Error(`Error: ${response.status}`);
+  }
+  
+  const data = await response.json();
+  console.log(data);
+}
+
+// Example usage
+getHoroscope('aries');
+```

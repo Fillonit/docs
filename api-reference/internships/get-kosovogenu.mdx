@@ -1,0 +1,79 @@
+---
+title: "Get Kosovogenu Internships"
+description: "Retrieve a list of internships from Kosovogenu"
+api: "GET /api/get_internships/kosovogenu"
+icon: "spider"
+---
+
+Retrieve a list of available internships from Kosovogenu. Our web scraper automatically extracts and normalizes internship data from Kosovogenu's platform, using advanced pattern matching to identify and collect internship listings.
+
+## API Request
+
+<CodeGroup>
+	```bash curl -X GET
+	https://scrape.fillonit.tech/api/get_internships/kosovogenu ```
+</CodeGroup>
+
+## Response
+
+<ResponseField name="status" type="number">
+	The HTTP status code of the response (200 for success)
+</ResponseField>
+
+<ResponseField name="data" type="array">
+	Array of internship listings
+	<Expandable title="Show array properties">
+		<ResponseField name="title" type="string">
+			The title of the internship position
+		</ResponseField>
+		<ResponseField name="company" type="string">
+			The company offering the internship
+		</ResponseField>
+		<ResponseField name="location" type="string">
+			The location of the internship
+		</ResponseField>
+		<ResponseField name="link" type="string">
+			Direct URL to the internship posting
+		</ResponseField>
+		<ResponseField name="posted_date" type="string">
+			The date when the internship was posted
+		</ResponseField>
+		<ResponseField name="duration" type="string">
+			Expected duration of the internship
+		</ResponseField>
+	</Expandable>
+</ResponseField>
+
+<RequestExample>
+	<CodeGroup>
+		```bash curl -X GET
+		https://scrape.fillonit.tech/api/get_internships/kosovogenu ```
+	</CodeGroup>
+</RequestExample>
+
+<ResponseExample>
+<CodeGroup>
+```json
+{
+  "status": 200,
+  "data": [
+    {
+      "title": "Software Development Intern",
+      "company": "Tech Solutions Kosovo",
+      "location": "Prishtina, Kosovo",
+      "link": "https://kosovogenu.com/internships/software-dev-intern",
+      "posted_date": "2024-01-15",
+      "duration": "3 months"
+    },
+    {
+      "title": "Digital Marketing Intern",
+      "company": "Creative Agency XYZ",
+      "location": "Prizren, Kosovo",
+      "link": "https://kosovogenu.com/internships/marketing-intern",
+      "posted_date": "2024-01-14",
+      "duration": "6 months"
+    }
+  ]
+}
+```
+</CodeGroup>

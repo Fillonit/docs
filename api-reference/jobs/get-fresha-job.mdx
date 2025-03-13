@@ -1,0 +1,75 @@
+---
+title: 'Get Fresha Job Details'
+description: 'Retrieve detailed information about a specific job from Fresha'
+api: 'GET /api/get_job/fresha'
+---
+
+Retrieve detailed information about a specific job posting from Fresha using its URL.
+
+## API Request
+
+<ParamField query="url" type="string" required>
+  The URL of the job posting on Fresha
+</ParamField>
+
+<CodeGroup>
+```bash
+curl -X GET https://scrape.fillonit.tech/api/get_job/fresha?url=https://fresha.com/jobs/example-job
+```
+</CodeGroup>
+
+## Response
+
+<ResponseField name="status" type="number">
+  The HTTP status code of the response (200 for success)
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  Job details object
+  <Expandable title="Show object properties">
+    <ResponseField name="title" type="string">
+      The title of the job position
+    </ResponseField>
+    <ResponseField name="company" type="string">
+      The company offering the position
+    </ResponseField>
+    <ResponseField name="location" type="string">
+      The location of the job
+    </ResponseField>
+    <ResponseField name="description" type="string">
+      Detailed job description
+    </ResponseField>
+    <ResponseField name="requirements" type="array">
+      List of job requirements
+    </ResponseField>
+    <ResponseField name="link" type="string">
+      Original job posting URL
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<RequestExample>
+```bash
+curl -X GET https://scrape.fillonit.tech/api/get_job/fresha?url=https://fresha.com/jobs/example-job
+```
+</RequestExample>
+
+<ResponseExample>
+```json
+{
+  "status": 200,
+  "data": {
+    "title": "Senior Software Engineer",
+    "company": "Fresha",
+    "location": "London, UK",
+    "description": "We are looking for a Senior Software Engineer to join our team...",
+    "requirements": [
+      "5+ years of experience in software development",
+      "Strong knowledge of Python and JavaScript",
+      "Experience with cloud technologies"
+    ],
+    "link": "https://fresha.com/jobs/example-job"
+  }
+}
+```
+</ResponseExample>

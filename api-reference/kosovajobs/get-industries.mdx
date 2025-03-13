@@ -1,0 +1,101 @@
+---
+title: 'Get Industries'
+description: 'Retrieve a list of industries from KosovaJobs'
+api: 'GET /api/get_industries/kosovajobs'
+---
+
+## Overview
+
+This endpoint retrieves a list of industries available on KosovaJobs. These industries can be used for filtering job listings by sector.
+
+## Request
+
+<ParamField path="/api/get_industries/kosovajobs" type="string">
+  The endpoint path
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X GET "https://scrape.fillonit.tech/api/get_industries/kosovajobs"
+```
+
+## Response
+
+<ResponseField name="200: OK" type="object">
+  <ResponseField name="industries" type="array">
+    An array of industry names available on KosovaJobs
+  </ResponseField>
+</ResponseField>
+
+<ResponseField name="500: Internal Server Error" type="object">
+  <ResponseField name="error" type="string">
+    Error message describing what went wrong
+  </ResponseField>
+</ResponseField>
+
+### Example Response
+
+```json
+[
+  "Information Technology",
+  "Finance",
+  "Marketing",
+  "Sales",
+  "Human Resources",
+  "Customer Service",
+  "Administration",
+  "Engineering",
+  "Education",
+  "Healthcare",
+  "Legal",
+  "Manufacturing",
+  "Retail",
+  "Telecommunications",
+  "Transportation"
+]
+```
+
+## Error Handling
+
+If an error occurs while processing your request, the API will return a 500 status code with an error message in the response body.
+
+## Code Examples
+
+<CodeGroup>
+
+```javascript JavaScript
+async function getIndustries() {
+  try {
+    const response = await fetch('https://scrape.fillonit.tech/api/get_industries/kosovajobs');
+    
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    
+    const industries = await response.json();
+    console.log(industries);
+    return industries;
+  } catch (error) {
+    console.error('Failed to fetch industries:', error);
+  }
+}
+```
+
+```python Python
+import requests
+
+def get_industries():
+    try:
+        response = requests.get('https://scrape.fillonit.tech/api/get_industries/kosovajobs')
+        response.raise_for_status()  # Raise an exception for 4XX/5XX responses
+        
+        industries = response.json()
+        print(industries)
+        return industries
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch industries: {e}")
+        return None
+```
+
+</CodeGroup>

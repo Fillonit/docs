@@ -1,0 +1,123 @@
+---
+title: 'Get Cities'
+description: 'Retrieve a list of cities from KosovaJobs'
+api: 'GET /api/get_cities/kosovajobs'
+---
+
+## Overview
+
+This endpoint retrieves a list of cities available on KosovaJobs. These cities can be used for filtering job listings by location.
+
+## Request
+
+<ParamField path="/api/get_cities/kosovajobs" type="string">
+  The endpoint path
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X GET "https://scrape.fillonit.tech/api/get_cities/kosovajobs"
+```
+
+## Response
+
+<ResponseField name="200: OK" type="object">
+  <ResponseField name="cities" type="array">
+    An array of city names available on KosovaJobs
+  </ResponseField>
+</ResponseField>
+
+<ResponseField name="500: Internal Server Error" type="object">
+  <ResponseField name="error" type="string">
+    Error message describing what went wrong
+  </ResponseField>
+</ResponseField>
+
+### Example Response
+
+```json
+[
+  "Prishtinë",
+  "Prizren",
+  "Pejë",
+  "Mitrovicë",
+  "Gjakovë",
+  "Gjilan",
+  "Ferizaj",
+  "Podujevë",
+  "Vushtrri",
+  "Suharekë",
+  "Rahovec",
+  "Drenas",
+  "Lipjan",
+  "Malishevë",
+  "Kamenicë",
+  "Viti",
+  "Deçan",
+  "Istog",
+  "Klinë",
+  "Skenderaj",
+  "Dragash",
+  "Fushë Kosovë",
+  "Kaçanik",
+  "Shtime",
+  "Obiliq",
+  "Leposaviq",
+  "Graçanicë",
+  "Han i Elezit",
+  "Zveçan",
+  "Shtërpcë",
+  "Novobërdë",
+  "Zubin Potok",
+  "Junik",
+  "Mamushë",
+  "Ranillug",
+  "Kllokot",
+  "Partesh"
+]
+```
+
+## Error Handling
+
+If an error occurs while processing your request, the API will return a 500 status code with an error message in the response body.
+
+## Code Examples
+
+<CodeGroup>
+
+```javascript JavaScript
+async function getCities() {
+  try {
+    const response = await fetch('https://scrape.fillonit.tech/api/get_cities/kosovajobs');
+    
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    
+    const cities = await response.json();
+    console.log(cities);
+    return cities;
+  } catch (error) {
+    console.error('Failed to fetch cities:', error);
+  }
+}
+```
+
+```python Python
+import requests
+
+def get_cities():
+    try:
+        response = requests.get('https://scrape.fillonit.tech/api/get_cities/kosovajobs')
+        response.raise_for_status()  # Raise an exception for 4XX/5XX responses
+        
+        cities = response.json()
+        print(cities)
+        return cities
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch cities: {e}")
+        return None
+```
+
+</CodeGroup>

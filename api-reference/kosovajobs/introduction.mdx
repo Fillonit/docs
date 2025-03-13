@@ -1,0 +1,49 @@
+---
+title: 'KosovaJobs API'
+description: 'Endpoints for retrieving job listings and related data from KosovaJobs'
+icon: 'briefcase'
+---
+
+## Overview
+
+The KosovaJobs API provides endpoints for retrieving job listings and related data from KosovaJobs, a popular job board in Kosovo. These endpoints allow you to access information about available jobs, industries, and cities.
+
+## Available Endpoints
+
+### Get Cities
+
+<Card title="Get Cities" icon="map-pin" href="/api-reference/kosovajobs/get-cities">
+  Retrieve a list of cities from KosovaJobs
+</Card>
+
+### Get Industries
+
+<Card title="Get Industries" icon="building" href="/api-reference/kosovajobs/get-industries">
+  Retrieve a list of industries from KosovaJobs
+</Card>
+
+## Response Format
+
+All KosovaJobs API endpoints return data in JSON format. Successful responses will have a 200 status code, while errors will have a 500 status code.
+
+## Error Handling
+
+If an error occurs while processing your request, the API will return a 500 status code with an error message in the response body.
+
+## Example Usage
+
+```javascript
+// Example: Fetching cities from KosovaJobs
+async function getCities() {
+  const response = await fetch('https://scrape.fillonit.tech/api/get_cities/kosovajobs');
+  const data = await response.json();
+  console.log(data);
+}
+
+// Example: Fetching industries from KosovaJobs
+async function getIndustries() {
+  const response = await fetch('https://scrape.fillonit.tech/api/get_industries/kosovajobs');
+  const data = await response.json();
+  console.log(data);
+}
+```

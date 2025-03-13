@@ -1,0 +1,138 @@
+---
+title: 'Get Foleja Product'
+description: 'Retrieve product details from Foleja'
+api: 'GET /api/get_foleja_product'
+---
+
+## Overview
+
+This endpoint retrieves detailed information about a specific product from Foleja based on the product URL.
+
+## Request
+
+### Parameters
+
+<ParamField query="url" type="string" required>
+  The URL of the Foleja product page
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X GET "https://scrape.fillonit.tech/api/get_foleja_product?url=https://foleja.com/product/123"
+```
+
+## Response
+
+<ResponseField name="200: OK" type="object">
+  <ResponseField name="title" type="string" required>
+    The title of the product
+  </ResponseField>
+  <ResponseField name="current_price" type="object" required>
+    <ResponseField name="amount" type="string" required>
+      The current price amount
+    </ResponseField>
+    <ResponseField name="currency" type="string" required>
+      The currency symbol (e.g., €)
+    </ResponseField>
+  </ResponseField>
+  <ResponseField name="previous_price" type="object">
+    <ResponseField name="amount" type="string">
+      The previous price amount (if on sale)
+    </ResponseField>
+    <ResponseField name="currency" type="string">
+      The currency symbol (e.g., €)
+    </ResponseField>
+  </ResponseField>
+  <ResponseField name="sale_percentage" type="string">
+    The discount percentage (if on sale)
+  </ResponseField>
+  <ResponseField name="product_id" type="string" required>
+    The unique identifier for the product
+  </ResponseField>
+  <ResponseField name="image_url" type="string" required>
+    URL to the product image
+  </ResponseField>
+  <ResponseField name="link" type="string" required>
+    URL to the product page
+  </ResponseField>
+</ResponseField>
+
+<ResponseField name="500: Internal Server Error" type="object">
+  <ResponseField name="error" type="string">
+    Error message describing what went wrong
+  </ResponseField>
+</ResponseField>
+
+### Example Response
+
+```json
+{
+  "title": "Fenix Bundle 1",
+  "current_price": {
+    "amount": "59.99",
+    "currency": "€"
+  },
+  "previous_price": {
+    "amount": "99.99",
+    "currency": "€"
+  },
+  "sale_percentage": "-41%",
+  "product_id": "product_123",
+  "image_url": "https://example.com/image.jpg",
+  "link": "https://example.com/product"
+}
+```
+
+## Error Handling
+
+If an error occurs while processing your request, the API will return a 500 status code with an error message in the response body.
+
+## Code Examples
+
+<CodeGroup>
+
+```javascript JavaScript
+async function getFolejaProduct(productUrl) {
+  try {
+    const response = await fetch(`https://scrape.fillonit.tech/api/get_foleja_product?url=${encodeURIComponent(productUrl)}`);
+    
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    
+    const productData = await response.json();
+    console.log(productData);
+    return productData;
+  } catch (error) {
+    console.error('Failed to fetch product:', error);
+  }
+}
+
+// Example usage
+getFolejaProduct('https://foleja.com/product/123');
+```
+
+```python Python
+import requests
+
+def get_foleja_product(product_url):
+    try:
+        response = requests.get(
+            'https://scrape.fillonit.tech/api/get_foleja_product',
+            params={'url': product_url}
+        )
+        response.raise_for_status()  # Raise an exception for 4XX/5XX responses
+        
+        product_data = response.json()
+        print(product_data)
+        return product_data
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch product: {e}")
+        return None
+
+# Example usage
+get_foleja_product('https://foleja.com/product/123')
+```
+
+</CodeGroup>

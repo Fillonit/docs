@@ -1,0 +1,116 @@
+---
+title: 'Get Horoscope'
+description: 'Retrieve the horoscope for a given zodiac sign'
+api: 'GET /api/get_horoscope'
+---
+
+## Overview
+
+This endpoint retrieves the horoscope for a specific zodiac sign. It provides daily predictions and insights for the requested sign.
+
+## Request
+
+### Parameters
+
+<ParamField query="sign" type="string" required>
+  The zodiac sign to retrieve the horoscope for (e.g., aries, taurus, gemini, etc.)
+</ParamField>
+
+### Example Request
+
+```bash
+curl -X GET "https://scrape.fillonit.tech/api/get_horoscope?sign=aries"
+```
+
+## Response
+
+<ResponseField name="200: OK" type="object">
+  <ResponseField name="sign" type="string" required>
+    The zodiac sign requested
+  </ResponseField>
+  <ResponseField name="date" type="string" required>
+    The date for the horoscope prediction
+  </ResponseField>
+  <ResponseField name="horoscope" type="string" required>
+    The horoscope prediction text
+  </ResponseField>
+</ResponseField>
+
+<ResponseField name="400: Bad Request" type="object">
+  <ResponseField name="error" type="string">
+    Error message indicating invalid or missing sign parameter
+  </ResponseField>
+</ResponseField>
+
+<ResponseField name="500: Internal Server Error" type="object">
+  <ResponseField name="error" type="string">
+    Error message describing what went wrong
+  </ResponseField>
+</ResponseField>
+
+### Example Response
+
+```json
+{
+  "sign": "aries",
+  "date": "2023-05-15",
+  "horoscope": "Today is a good day to take initiative on projects you've been putting off. Your energy is high, and you'll find that others are receptive to your ideas. Don't be afraid to speak up in meetings or social gatherings."
+}
+```
+
+## Error Handling
+
+The API uses the following status codes to indicate the success or failure of a request:
+
+- `200 OK`: The request was successful
+- `400 Bad Request`: The request was invalid (e.g., missing or invalid sign parameter)
+- `500 Internal Server Error`: An error occurred on the server
+
+## Code Examples
+
+<CodeGroup>
+
+```javascript JavaScript
+async function getHoroscope(sign) {
+  try {
+    const response = await fetch(`https://scrape.fillonit.tech/api/get_horoscope?sign=${sign}`);
+    
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status}`);
+    }
+    
+    const horoscopeData = await response.json();
+    console.log(horoscopeData);
+    return horoscopeData;
+  } catch (error) {
+    console.error('Failed to fetch horoscope:', error);
+  }
+}
+
+// Example usage
+getHoroscope('aries');
+```
+
+```python Python
+import requests
+
+def get_horoscope(sign):
+    try:
+        response = requests.get(
+            'https://scrape.fillonit.tech/api/get_horoscope',
+            params={'sign': sign}
+        )
+        response.raise_for_status()  # Raise an exception for 4XX/5XX responses
+        
+        horoscope_data = response.json()
+        print(horoscope_data)
+        return horoscope_data
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to fetch horoscope: {e}")
+        return None
+
+# Example usage
+get_horoscope('aries')
+```
+
+</CodeGroup>
